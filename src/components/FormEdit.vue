@@ -40,6 +40,9 @@
       padding: 10px;
       outline: none;
       margin: 10px 0px;
+      border-radius: 12px;
+      outline: none;
+      border: 1px solid #ccc;
     }
     .home form button{
       width: 100%;
@@ -100,6 +103,7 @@ import axios from 'axios';
                 this.$toast.success(`Produto editado!`, {
                     position: "top"
                 });
+                this.$router.go();
               })
         },
     },

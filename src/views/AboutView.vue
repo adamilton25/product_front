@@ -1,5 +1,6 @@
 <template>
   <div class="about">
+    <h4>{{items.length}} Items</h4>
     <table class="table">
   <thead class="table-dark">
     <tr>
@@ -11,13 +12,13 @@
       <th scope="col">Actions</th>
     </tr>
   </thead>
-  <tbody  v-for="(item) in items" :key="item.id">
+  <tbody  v-for="(item) in items" :key="item.id" style="background:#111;color:#fff">
     <tr>
       <th scope="row">{{item.id}}</th>
       <td>{{item.name}}</td>
-      <td>{{item.description}}</td>
+      <td>{{item.description.substring(0,50)}}</td>
       <td>{{item.value == null ? 'Valor não definido' : `R$${item.value}`}}</td>
-      <td>{{item.quantity}}</td>
+      <td>{{parseInt(item.quantity) <= 0 ? 'Out of Stock' : parseInt(item.quantity) }}</td>
       <button @click="deleteProduct(item.id)" 
       style="border:none;background:red;color:aliceblue;padding:5px;">Excluir</button>
       <button  @click="editProduct(item.id)" 
@@ -41,7 +42,20 @@
       ">Close</button>
       </div>
 </template>
-
+<style scoped>
+  td {
+    font-size: 10px;
+    width: 50px;
+  }
+  th {
+    font-size: 10px;
+    width: 10px;
+  }
+  tr
+  {
+    font-size: 10px;
+  }
+</style>
 <script>
   import axios from 'axios';
 import FormEdit from '@/components/FormEdit.vue';
@@ -83,7 +97,7 @@ import FormEdit from '@/components/FormEdit.vue';
           this.edit = true;
         }
     },
-    mounted() {
+    mounted(){
         this.showAllProducts();
     },
     components: { FormEdit }

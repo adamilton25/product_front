@@ -16,22 +16,27 @@
 <style scoped>
 .home{
   width: 100%;
-  padding:  10px 150px;
+  padding:  10px 250px;
 }
 
 .home form input, textarea {
   width: 100%;
   padding: 10px;
   outline: none;
-  margin: 10px 0px;
+  border-radius: 12px;
+  outline: none;
+  border: 1px solid #ccc;
 }
 .home form button{
+  margin: 50px 0px;
   width: 100%;
   padding: 8px;
-  border: none;
   background: #111111;
   color: white;
   font-weight: 600;
+  border-radius: 12px;
+  outline: none;
+  border: 1px solid #ccc;
 }
 </style>
 <script>
