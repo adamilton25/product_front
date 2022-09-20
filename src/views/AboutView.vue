@@ -27,6 +27,9 @@
     </tr>
   </tbody>
   </table>
+  <div class="pages" v-if="total_products != items.length">
+    <a @click="show_more_products">Mostrar mais (100)</a>
+  </div>
   <FormEdit v-if="edit" :product_id="product_id"/>
   <button  
       v-if="edit"
@@ -43,6 +46,11 @@
       </div>
 </template>
 <style scoped>
+  .pages a {
+    font-size: 12px;
+    color: #111;
+    cursor: pointer;
+  }
   td {
     font-size: 10px;
     width: 50px;
@@ -67,15 +75,26 @@ import FormEdit from '@/components/FormEdit.vue';
             items: [],
             delete: "",
             edit: false,
-            product_id: ''
+            product_id: '',
+            total_products: '',
+            show_more: 1,
+            new_products: ''
         };
     },
     methods: {
-        showAllProducts() {
+        showAllProducts(new_object = false) {
             axios
-                .get("http://127.0.0.1:3000/v1/products")
+                .get(`http://127.0.0.1:3000/v1/products?page=${this.show_more}`)
                 .then((response) => {
+                if (new_object == false){
                 this.items = response.data.products;
+                this.total_products = response.data.total;
+                }else{
+                if(response.data.total > this.total_products) 
+                this.$toast.success(`Novos produtos populados`);
+                this.items = response.data.products;
+                this.total_products = response.data.total;
+                }
             });
         },
         deleteProduct(id) {
@@ -89,16 +108,24 @@ import FormEdit from '@/components/FormEdit.vue';
                     .get("http://127.0.0.1:3000/v1/products")
                     .then((response) => {
                     this.items = response.data.products;
+                    
                 });
             });
         },
         editProduct(id){
           this.product_id = id
           this.edit = true;
+        },
+        show_more_products(){
+          this.show_more ++
+          this.showAllProducts();
         }
     },
     mounted(){
         this.showAllProducts();
+        setInterval(()=> {
+          this.showAllProducts(true)
+        },6000)
     },
     components: { FormEdit }
 }

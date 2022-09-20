@@ -18,13 +18,11 @@
   width: 100%;
   padding:  10px 250px;
 }
-
 .home form input, textarea {
   width: 100%;
   padding: 10px;
   outline: none;
   border-radius: 12px;
-  outline: none;
   border: 1px solid #ccc;
 }
 .home form button{
@@ -56,7 +54,7 @@ export default {
     CreateProduct(e){
       e.preventDefault();
       axios
-      .post('http://127.0.0.1:3000/v1/products',{
+      .post(`http://127.0.0.1:3000/v1/products`,{
           product:{
             name: this.name,
             description: this.description,
